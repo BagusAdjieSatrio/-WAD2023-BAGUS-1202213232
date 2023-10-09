@@ -1,0 +1,22 @@
+body{
+	background-image: url(kedua.jpeg);
+	background-repeat: repeat-x;
+	background-position: top right;
+	background-position: 200px;
+}
+
+h1{
+	color: white;
+}
+
+h3{
+	color: white;
+}
+
+p{
+	color: white;
+}
+
+table{
+	color: white;
+}
