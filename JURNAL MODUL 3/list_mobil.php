@@ -1,72 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List Mobil</title>
-</head>
-<body>
-    <?php include("navbar.php") ?>
-    <center>
-        <div class="container">
-            <h1>List Mobil</h1>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope ="col">#</th>
-                        <th scope ="col">Nama Mobil</th>
-                        <th scope ="col">Brand Mobil</th>
-                        <th scope ="col">Warna Mobil</th>
-                        <th scope ="col">Tipe Mobil</th>
-                        <th scope ="col">Harga</th>
-                        <th scope ="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-            <?php
-            include("connect.php");
+<!-- Pada file ini kalian membuat coding untuk logika update / meng-edit data mobil pada showroom sesuai id-->
+<?php
+// (1) Jangan lupa sertakan koneksi database dari yang sudah kalian buat yaa
+include('connect.php');
+// (2) Tangkap nilai "id" mobil (CLUE: gunakan GET)
+$id = $_GET['id'];
+$nama_mobil = $_POST['nama_mobil'];
+$brand_mobil = $_POST['brand_mobil'];
+$warna_mobil = $_POST['warna_mobil'];
+$tipe_mobil = $_POST['tipe_mobil'];
+$harga_mobil = $_POST['harga_mobil'];
+    // (3) Buatkan fungsi "update" yang menerima data sebagai parameter
+        $update = mysqli_query($connect, "UPDATE showroom_mobil SET nama_mobil='$nama_mobil', brand_mobil='$brand_mobil', warna_mobil='$warna_mobil', tipe_mobil='$tipe_mobil', harga_mobil='$harga_mobil' WHERE id='$id'");
+        // Dapatkan data yang dikirim sebagai parameter dan simpan dalam variabel yang sesuai.
+        
+        // Buatkan perintah SQL UPDATE untuk mengubah data di tabel, berdasarkan id mobil
 
-            // Buatlah query untuk mengambil data dari database (gunakan query SELECT)
-            $query = mysqli_query($connect, "SELECT * FROM showroom_mobil");
-    
+        // Eksekusi perintah SQL
 
-            
-
-            // Buatlah perkondisian dimana: 
-            // 1. a. Apabila ada data dalam database, maka outputnya adalah semua data dalam database akan ditampilkan 
-            //       (gunakan num_rows > 0, while, dan mysqli_fetch_assoc())
-
-            //    b. Untuk setiap data yang ditampilkan, buatlah sebuah button atau link yang akan mengarahkan web ke halaman 
-            //       form_detail_mobil.php dimana halaman tersebut akan menunjukkan seluruh data dari satu mobil berdasarkan id
-
-            // 2. Apabila tidak ada data dalam database, maka outputnya adalah pesan 'tidak ada data dalam tabel'
-
-            //<!--  **********************  1  **************************     -->
-            if($query){
-                while ($selects = mysqli_fetch_assoc($query)){
-            ?>
-            <tr>
-                <th scope ="row"><?= $selects['id'] ?></th>
-                <td><?= $selects['nama_mobil'] ?></td>
-                <td><?= $selects['brand_mobil'] ?></td>
-                <td><?= $selects['warna_mobil'] ?></td>
-                <td><?= $selects['tipe_mobil'] ?></td>
-                <td><?= $selects['harga_mobil'] ?></td>
-                <td><a href="form_detail_mobil.php?id=<?= $selects['id'] ?>" class="btn btn-primary">Detail</td>
-            </tr>
-            <?php
-                }
-            }
-            //<!--  **********************  1  **************************     -->
-
-            //<!--  **********************  2  **************************     -->
-
-            else {
-                echo"Tidak ada data di database";
-            }
-            //<!--  **********************  2  **************************     -->
-            ?>
-        </div>
-    </center>
-</body>
-</html>
+        // Buatkan kondisi jika eksekusi query berhasil
+        // Jika terdapat kesalahan, buatkan eksekusi query gagalnya
+        if ($update){
+            header('Location: list_mobil.php');
+        } else {
+            echo "<script>
+                alert('Error')
+                document.location.href = 'form_update_mobil.php'
+                </script>";
+        }
+    // Panggil fungsi update dengan data yang sesuai
+// Tutup koneksi ke database setelah selesai menggunakan database
+mysqli_close($connect);
+?>
