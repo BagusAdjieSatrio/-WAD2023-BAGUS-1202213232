@@ -13,8 +13,9 @@ $conn = mysqli_connect("host","username","pass","db");
 // 
   
 // Buatlah perkondisian jika tidak bisa terkoneksi ke database maka akan mengeluarkan errornya
-if ($conn->connect_error){
-    die("Error" .$conn->connect_error);
-}
+if ($connect->connect_error) {
+    die("Connection failed: [pesan kesalahan koneksi]" . $connect->connect_error);
+  }
+  echo "Connected successfully";
 // 
 ?>
